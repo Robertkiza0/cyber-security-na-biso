@@ -56,7 +56,7 @@
 
                 <div class="mb-6">
                     <label for="ageGroup" class="block text-gray-700 text-sm font-medium mb-2">1. Quel est votre groupe d'âge ?</label>
-                    <select id="ageGroup" name="ageGroup" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <select id="ageGroup" name="ageGroup" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
                         <option value="">Sélectionnez une option</option>
                         <option value="moins de 18">Moins de 18 ans</option>
                         <option value="18-25">18 - 25 ans</option>
@@ -557,7 +557,7 @@
                     <label class="block text-gray-700 text-sm font-medium mb-2">14. Seriez-vous intéressé(e) à recevoir des conseils ou des informations sur la cybersécurité de notre part ?</label>
                     <div class="mt-2 space-y-2">
                         <div class="flex items-center">
-                            <input type="radio" id="interestedYes" name="interestedInInfo" value="Oui" class="hidden" required onchange="toggleEmailInput()">
+                            <input type="radio" id="interestedYes" name="interestedInInfo" value="Oui" class="hidden" required>
                             <label for="interestedYes" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
                                 <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
                                     <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
@@ -566,7 +566,7 @@
                             </label>
                         </div>
                         <div class="flex items-center">
-                            <input type="radio" id="interestedNo" name="interestedInInfo" value="Non" class="hidden" onchange="toggleEmailInput()">
+                            <input type="radio" id="interestedNo" name="interestedInInfo" value="Non" class="hidden">
                             <label for="interestedNo" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
                                 <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
                                     <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
@@ -616,8 +616,8 @@
     <script type="module">
         // Firebase imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         let db;
         let auth;
@@ -625,6 +625,7 @@
         let isAuthReady = false;
 
         // Initialize Firebase
+        // VOTRE CONFIGURATION FIREBASE EST MAINTENANT ICI
         const firebaseConfig = {
             apiKey: "AIzaSyDpo08TzzFW2VL5NMowFqJ0STxWqYftZJg",
             authDomain: "cybersecurite-na-biso.firebaseapp.com",
@@ -650,20 +651,14 @@
             } else {
                 try {
                     // If no user is signed in, attempt to sign in anonymously.
-                    // This part handles the initial authentication for the Canvas environment or a standard web host.
-                    if (typeof __initial_auth_token !== 'undefined') {
-                        // For Canvas environment, use the provided custom token
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        // For external hosting, sign in anonymously
-                        const anonymousUser = await signInAnonymously(auth);
-                        userId = anonymousUser.user.uid;
-                        console.log("Signed in anonymously. User ID:", userId);
-                    }
+                    // Cette méthode est utilisée pour l'hébergement externe.
+                    const anonymousUser = await signInAnonymously(auth);
+                    userId = anonymousUser.user.uid;
+                    console.log("Signed in anonymously. User ID:", userId);
                     isAuthReady = true; // Authentication is ready after successful sign-in
                 } catch (error) {
                     console.error("Firebase authentication error:", error);
-                    showErrorModal("Erreur d'authentification Firebase : " + error.message);
+                    showErrorModal("Erreur d'authentification Firebase : " + error.message + ". Veuillez vérifier votre configuration Firebase et que l'authentification anonyme est activée.");
                     isAuthReady = false; // Authentication failed
                 }
             }
@@ -714,6 +709,7 @@
         function validateCurrentSection() {
             const currentSectionElement = document.getElementById(`section${currentSection}`);
             let isValid = true;
+            console.log(`Validation de la Section ${currentSection}`); // Message de débogage
 
             // Validate required fields in the current section
             currentSectionElement.querySelectorAll('[required]').forEach(input => {
@@ -721,14 +717,19 @@
                     const name = input.name;
                     if (!document.querySelector(`input[name="${name}"]:checked`)) {
                         isValid = false;
+                        console.log(`Échec de validation : Groupe radio "${name}" non sélectionné.`); // Message de débogage
                     }
                 } else if (input.type === 'checkbox') {
-                    const name = input.name;
-                    if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                    // Ce bloc est pertinent si des cases à cocher individuelles ont l'attribut 'required'.
+                    // Dans ce formulaire, les cases à cocher de groupe (Q6, Q7, Q9) n'ont PAS 'required' sur l'HTML.
+                    // La validation "au moins une cochée" pour ces groupes est gérée plus bas.
+                    if (input.hasAttribute('required') && !input.checked) {
                         isValid = false;
+                        console.log(`Échec de validation : Case à cocher obligatoire "${input.id}" non cochée.`); // Message de débogage
                     }
                 } else if (!input.value.trim()) {
                     isValid = false;
+                    console.log(`Échec de validation : Champ "${input.id}" est vide.`); // Message de débogage
                 }
             });
 
@@ -736,56 +737,62 @@
             if (currentSection === 3) {
                 const isVictim = document.querySelector('input[name="isVictim"]:checked')?.value;
                 if (isVictim === 'Oui' && document.getElementById('victimQuestions').classList.contains('active')) {
-                    // Check if at least one incidentType is checked
+                    console.log("Validation des questions spécifiques aux victimes..."); // Message de débogage
+                    // Les champs dans 'victimQuestions' sont rendus obligatoires par toggleVictimQuestions()
+                    // si 'isVictim' est 'Oui'.
+
                     const incidentTypes = document.querySelectorAll('input[name="incidentType"]:checked');
                     if (incidentTypes.length === 0) {
                         isValid = false;
+                        console.log("Échec de validation : Aucun type d'incident sélectionné."); // Message de débogage
                     } else {
-                        // If 'Autre' is checked, ensure the 'other' text field is filled
                         const otherIncidentTypeChecked = document.getElementById('incidentTypeOther').checked;
                         if (otherIncidentTypeChecked && !document.getElementById('incidentTypeOtherText').value.trim()) {
                             isValid = false;
+                            console.log("Échec de validation : Type d'incident 'Autre' sélectionné mais texte vide."); // Message de débogage
                         }
                     }
 
-                    // Check if at least one platform is checked
                     const platforms = document.querySelectorAll('input[name="platform"]:checked');
                     if (platforms.length === 0) {
                         isValid = false;
+                        console.log("Échec de validation : Aucune plateforme sélectionnée."); // Message de débogage
                     } else {
-                        // If 'Autre' is checked, ensure the 'other' text field is filled
                         const otherPlatformChecked = document.getElementById('platformOther').checked;
                         if (otherPlatformChecked && !document.getElementById('platformOtherText').value.trim()) {
                             isValid = false;
+                            console.log("Échec de validation : Plateforme 'Autre' sélectionnée mais texte vide."); // Message de débogage
                         }
                     }
 
-                    // Check if incidentDate is filled
                     if (!document.getElementById('incidentDate').value.trim()) {
                         isValid = false;
+                        console.log("Échec de validation : Date de l'incident vide."); // Message de débogage
                     }
 
-                    // Check if at least one consequence is checked
-                    const consequences = document.querySelectorAll('input[name="consequence"]:checked');
+                    const consequences = document.querySelectorAll('input[name="consequence']:checked');
                     if (consequences.length === 0) {
                         isValid = false;
+                        console.log("Échec de validation : Aucune conséquence sélectionnée."); // Message de débogage
                     } else {
-                        // If 'Autre' is checked, ensure the 'other' text field is filled
                         const otherConsequenceChecked = document.getElementById('consequenceOther').checked;
                         if (otherConsequenceChecked && !document.getElementById('consequenceOtherText').value.trim()) {
                             isValid = false;
+                            console.log("Échec de validation : Conséquence 'Autre' sélectionnée mais texte vide."); // Message de débogage
                         }
                     }
 
-                    // Check reportedIncident and securedAccounts radio buttons
                     if (!document.querySelector('input[name="reportedIncident"]:checked')) {
                         isValid = false;
+                        console.log("Échec de validation : Question 'Incident signalé' non sélectionnée."); // Message de débogage
                     }
                     if (!document.querySelector('input[name="securedAccounts"]:checked')) {
                         isValid = false;
+                        console.log("Échec de validation : Question 'Comptes sécurisés' non sélectionnée."); // Message de débogage
                     }
                 }
             }
+            console.log(`Résultat de validation de la Section ${currentSection} : ${isValid}`); // Message de débogage
             return isValid;
         }
 
@@ -793,23 +800,49 @@
         window.toggleVictimQuestions = function() {
             const isVictim = document.querySelector('input[name="isVictim"]:checked')?.value;
             const victimQuestionsDiv = document.getElementById('victimQuestions');
-            const nextSection3Button = document.getElementById('nextSection3Button');
 
             if (isVictim === 'Oui') {
                 victimQuestionsDiv.classList.add('active');
                 victimQuestionsDiv.classList.remove('hidden');
                 // Make fields required if section is active and user is a victim
-                victimQuestionsDiv.querySelectorAll('input, select, textarea').forEach(el => {
-                    if (el.name !== 'incidentDetails') { // incidentDetails is optional
-                        el.setAttribute('required', 'required');
-                    }
-                });
+                // Note: 'incidentDetails' est optionnel, donc on ne le rend pas obligatoire ici
+                document.getElementById('incidentDate').setAttribute('required', 'required');
+                // Rendre les groupes de radios obligatoires pour les questions 10 et 11
+                document.querySelectorAll('input[name="reportedIncident"]').forEach(radio => radio.setAttribute('required', 'required'));
+                document.querySelectorAll('input[name="securedAccounts"]').forEach(radio => radio.setAttribute('required', 'required'));
+
+                // Pour les groupes de cases à cocher (incidentType, platform, consequence),
+                // la validation "au moins une cochée" est gérée par la fonction validateCurrentSection
+                // et non par l'attribut 'required' sur chaque case.
             } else {
                 victimQuestionsDiv.classList.remove('active');
                 victimQuestionsDiv.classList.add('hidden');
                 // Remove required attribute if section is hidden
-                victimQuestionsDiv.querySelectorAll('input, select, textarea').forEach(el => {
-                    el.removeAttribute('required');
+                document.getElementById('incidentDate').removeAttribute('required');
+                document.querySelectorAll('input[name="reportedIncident"]').forEach(radio => radio.removeAttribute('required'));
+                document.querySelectorAll('input[name="securedAccounts"]').forEach(radio => radio.removeAttribute('required'));
+
+                // Désactiver les champs "Autre" et vider leur contenu si la section est cachée
+                document.getElementById('incidentTypeOtherText').classList.add('hidden');
+                document.getElementById('incidentTypeOtherText').removeAttribute('required');
+                document.getElementById('incidentTypeOtherText').value = '';
+                document.getElementById('platformOtherText').classList.add('hidden');
+                document.getElementById('platformOtherText').removeAttribute('required');
+                document.getElementById('platformOtherText').value = '';
+                document.getElementById('consequenceOtherText').classList.add('hidden');
+                document.getElementById('consequenceOtherText').removeAttribute('required');
+                document.getElementById('consequenceOtherText').value = '';
+
+                // Décocher les cases à cocher et radios de la section cachée pour éviter des validations inattendues
+                victimQuestionsDiv.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                    cb.nextElementSibling.querySelector('.checkmark')?.classList.add('hidden');
+                    cb.nextElementSibling.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                });
+                victimQuestionsDiv.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                    radio.nextElementSibling.querySelector('.radio-checked-dot')?.classList.add('hidden');
+                    radio.nextElementSibling.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
                 });
             }
         }
@@ -860,6 +893,16 @@
             document.getElementById('incidentTypeOtherText').classList.add('hidden');
             document.getElementById('platformOtherText').classList.add('hidden');
             document.getElementById('consequenceOtherText').classList.add('hidden');
+
+            // Réinitialiser l'état visuel des radios/checkboxes masquées
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.nextElementSibling.querySelector('.radio-checked-dot')?.classList.add('hidden');
+                radio.nextElementSibling.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+            });
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.nextElementSibling.querySelector('.checkmark')?.classList.add('hidden');
+                checkbox.nextElementSibling.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+            });
         }
 
         // Error modal functions
@@ -890,6 +933,7 @@
                 return;
             }
 
+            // Validation finale avant soumission
             if (!validateCurrentSection()) {
                 showErrorModal("Veuillez remplir tous les champs obligatoires de cette section.");
                 return;
@@ -902,8 +946,9 @@
 
             // Collect all form data
             for (let [key, value] of formData.entries()) {
+                // Skip 'other' text if its corresponding checkbox is not checked
                 if (key.endsWith('OtherText') && !document.getElementById(key.replace('Text', '')).checked) {
-                    continue; // Skip 'other' text if its corresponding checkbox is not checked
+                    continue;
                 }
                 if (key === 'incidentType' || key === 'platform' || key === 'consequence') {
                     if (!data[key]) {
@@ -915,7 +960,7 @@
                 }
             }
 
-            // Handle 'other' text for checkboxes
+            // Handle 'other' text for checkboxes (ensure they are added to the array if checked)
             document.querySelectorAll('input[type="checkbox"][name="incidentType"]').forEach(checkbox => {
                 if (checkbox.value === 'Autre' && checkbox.checked) {
                     const otherText = document.getElementById('incidentTypeOtherText').value.trim();
@@ -950,7 +995,7 @@
                 }
             });
 
-            // Clean up 'Other' values if not selected
+            // Clean up 'Autre' values if not selected (remove the literal 'Autre' if the text field was used)
             if (data.incidentType && data.incidentType.includes('Autre') && !document.getElementById('incidentTypeOther').checked) {
                 data.incidentType = data.incidentType.filter(item => item !== 'Autre');
             }
@@ -960,6 +1005,7 @@
             if (data.consequence && data.consequence.includes('Autre') && !document.getElementById('consequenceOther').checked) {
                 data.consequence = data.consequence.filter(item => item !== 'Autre');
             }
+
 
             // Add timestamp
             data.timestamp = new Date().toISOString();
