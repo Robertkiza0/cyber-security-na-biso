@@ -505,7 +505,40 @@
                     </div>
 
                     <div class="mb-6">
-                        <label for="incidentDetails" class="block text-gray-700 text-sm font-medium mb-2">12. Si vous souhaitez partager plus de détails sur l'incident (ce qui s'est passé, comment vous l'avez découvert, etc.), veuillez le faire ici. (Optionnel)</label>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">12. Avez-vous pris des mesures pour sécuriser vos comptes après l'incident ? (Ex: changer de mot de passe, activer l'authentification à deux facteurs)</label>
+                        <div class="mt-2 space-y-2">
+                            <div class="flex items-center">
+                                <input type="radio" id="securedYes" name="securedAccounts" value="Oui" class="hidden" required>
+                                <label for="securedYes" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Oui
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="securedNo" name="securedAccounts" value="Non" class="hidden">
+                                <label for="securedNo" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Non
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="securedDidNotKnow" name="securedAccounts" value="Je ne savais pas quelles mesures prendre" class="hidden">
+                                <label for="securedDidNotKnow" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Je ne savais pas quelles mesures prendre
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="incidentDetails" class="block text-gray-700 text-sm font-medium mb-2">13. Si vous souhaitez partager plus de détails sur l'incident (ce qui s'est passé, comment vous l'avez découvert, etc.), veuillez le faire ici. (Optionnel)</label>
                         <textarea id="incidentDetails" name="incidentDetails" rows="4" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Décrivez l'incident..."></textarea>
                     </div>
                 </div>
@@ -521,12 +554,12 @@
                 <h2 class="text-2xl font-semibold text-gray-700 mb-4">Section 4 : Suggestions et Sensibilisation</h2>
 
                 <div class="mb-6">
-                    <label for="suggestions" class="block text-gray-700 text-sm font-medium mb-2">13. Selon vous, quelles sont les informations ou les actions les plus importantes pour aider les gens à se protéger en ligne ?</label>
+                    <label for="suggestions" class="block text-gray-700 text-sm font-medium mb-2">14. Selon vous, quelles sont les informations ou les actions les plus importantes pour aider les gens à se protéger en ligne ?</label>
                     <textarea id="suggestions" name="suggestions" rows="4" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Vos suggestions..."></textarea>
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-medium mb-2">14. Seriez-vous intéressé(e) à recevoir des conseils ou des informations sur la cybersécurité de notre part ?</label>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">15. Seriez-vous intéressé(e) à recevoir des conseils ou des informations sur la cybersécurité de notre part ?</label>
                     <div class="mt-2 space-y-2">
                         <div class="flex items-center">
                             <input type="radio" id="interestedYes" name="interestedInInfo" value="Oui" class="hidden" required onchange="toggleContactInfo()">
@@ -550,7 +583,7 @@
                 </div>
 
                 <div id="contactMethodContainer" class="mb-6 hidden">
-                    <label class="block text-gray-700 text-sm font-medium mb-2">15. Comment souhaitez-vous recevoir ces informations ?</label>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">16. Comment souhaitez-vous recevoir ces informations ?</label>
                     <div class="mt-2 space-y-2">
                         <div class="flex items-center">
                             <input type="radio" id="contactMethodEmail" name="contactMethod" value="Email" class="hidden" onchange="toggleContactFields()">
@@ -831,13 +864,13 @@
 
             // Specific validation for Section 4 (Suggestions et Sensibilisation)
             if (currentSection === 4) {
-                // Q14: Interested in info
+                // Q15: Interested in info
                 if (!document.querySelector('input[name="interestedInInfo"]:checked')) {
                     missingFields.push("Question \"Seriez-vous intéressé(e) à recevoir des conseils ou des informations sur la cybersécurité ?\"");
                 } else {
                     const interestedInInfo = document.querySelector('input[name="interestedInInfo"]:checked')?.value;
                     if (interestedInInfo === 'Oui') {
-                        // Q15: Contact Method
+                        // Q16: Contact Method
                         const contactMethod = document.querySelector('input[name="contactMethod"]:checked')?.value;
                         if (!contactMethod) {
                             missingFields.push("Question \"Comment souhaitez-vous recevoir ces informations ?\"");
@@ -878,6 +911,10 @@
             if (isVictim === 'Oui') {
                 victimQuestionsDiv.classList.add('active');
                 victimQuestionsDiv.classList.remove('hidden');
+                // Scroll to the victim questions section to ensure visibility
+                victimQuestionsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                console.log("victimQuestionsDiv est maintenant visible et défilé.");
+
                 // Make fields required if section is active and user is a victim
                 document.getElementById('incidentDate').setAttribute('required', 'required');
                 document.querySelectorAll('input[name="reportedIncident"]').forEach(radio => radio.setAttribute('required', 'required'));
@@ -887,6 +924,8 @@
             } else {
                 victimQuestionsDiv.classList.remove('active');
                 victimQuestionsDiv.classList.add('hidden');
+                console.log("victimQuestionsDiv est maintenant caché.");
+
                 // Remove required attribute if section is hidden
                 document.getElementById('incidentDate').removeAttribute('required');
                 document.querySelectorAll('input[name="reportedIncident"]').forEach(radio => radio.removeAttribute('required'));
