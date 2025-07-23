@@ -679,9 +679,9 @@
 
         // Navigation functions
         window.nextSection = function() {
-            // Basic validation for the current section before moving to the next
-            if (!validateCurrentSection()) {
-                showErrorModal("Veuillez remplir tous les champs obligatoires de cette section.");
+            const missingFields = validateCurrentSection();
+            if (missingFields.length > 0) {
+                showErrorModal("Veuillez remplir les champs obligatoires suivants :<br>" + missingFields.join('<br>'));
                 return;
             }
 
@@ -708,92 +708,105 @@
         // Validation for current section
         function validateCurrentSection() {
             const currentSectionElement = document.getElementById(`section${currentSection}`);
-            let isValid = true;
+            let missingFields = [];
             console.log(`Validation de la Section ${currentSection}`); // Message de débogage
 
             // Validate required fields in the current section
             currentSectionElement.querySelectorAll('[required]').forEach(input => {
+                let fieldLabel = input.id; // Default label
+                // Try to get a more user-friendly label
+                if (input.labels && input.labels.length > 0) {
+                    fieldLabel = input.labels[0].textContent.replace(':', '').trim();
+                } else if (input.closest('.mb-6')) { // For radio/checkbox groups
+                    const groupLabel = input.closest('.mb-6').querySelector('label.block');
+                    if (groupLabel) {
+                        fieldLabel = groupLabel.textContent.replace(':', '').trim();
+                    }
+                }
+
                 if (input.type === 'radio') {
                     const name = input.name;
                     if (!document.querySelector(`input[name="${name}"]:checked`)) {
-                        isValid = false;
-                        console.log(`Échec de validation : Groupe radio "${name}" non sélectionné.`); // Message de débogage
+                        if (!missingFields.includes(fieldLabel)) { // Avoid duplicate messages for radio groups
+                            missingFields.push(`Question "${fieldLabel}"`);
+                        }
                     }
-                } else if (input.type === 'checkbox') {
-                    // Ce bloc est pertinent si des cases à cocher individuelles ont l'attribut 'required'.
-                    // Dans ce formulaire, les cases à cocher de groupe (Q6, Q7, Q9) n'ont PAS 'required' sur l'HTML.
-                    // La validation "au moins une cochée" pour ces groupes est gérée plus bas.
-                    if (input.hasAttribute('required') && !input.checked) {
-                        isValid = false;
-                        console.log(`Échec de validation : Case à cocher obligatoire "${input.id}" non cochée.`); // Message de débogage
+                } else if (input.tagName === 'SELECT') { // Specific check for select dropdown
+                    if (!input.value.trim()) {
+                        missingFields.push(`Champ "${fieldLabel}"`);
                     }
                 } else if (!input.value.trim()) {
-                    isValid = false;
-                    console.log(`Échec de validation : Champ "${input.id}" est vide.`); // Message de débogage
+                    missingFields.push(`Champ "${fieldLabel}"`);
                 }
             });
 
             // Specific validation for victim questions if visible
             if (currentSection === 3) {
                 const isVictim = document.querySelector('input[name="isVictim"]:checked')?.value;
-                if (isVictim === 'Oui' && document.getElementById('victimQuestions').classList.contains('active')) {
+                if (isVictim === 'Oui' && !document.getElementById('victimQuestions').classList.contains('hidden')) { // Check if visible
                     console.log("Validation des questions spécifiques aux victimes..."); // Message de débogage
-                    // Les champs dans 'victimQuestions' sont rendus obligatoires par toggleVictimQuestions()
-                    // si 'isVictim' est 'Oui'.
 
+                    // Q6: Type d'incident
                     const incidentTypes = document.querySelectorAll('input[name="incidentType"]:checked');
                     if (incidentTypes.length === 0) {
-                        isValid = false;
-                        console.log("Échec de validation : Aucun type d'incident sélectionné."); // Message de débogage
+                        missingFields.push("Question \"Quel type d'incident avez-vous rencontré ?\"");
                     } else {
                         const otherIncidentTypeChecked = document.getElementById('incidentTypeOther').checked;
                         if (otherIncidentTypeChecked && !document.getElementById('incidentTypeOtherText').value.trim()) {
-                            isValid = false;
-                            console.log("Échec de validation : Type d'incident 'Autre' sélectionné mais texte vide."); // Message de débogage
+                            missingFields.push("Champ \"Autre type d'incident\"");
                         }
                     }
 
+                    // Q7: Plateforme
                     const platforms = document.querySelectorAll('input[name="platform"]:checked');
                     if (platforms.length === 0) {
-                        isValid = false;
-                        console.log("Échec de validation : Aucune plateforme sélectionnée."); // Message de débogage
+                        missingFields.push("Question \"Sur quelle plateforme ou via quel moyen l'incident s'est-il produit ?\"");
                     } else {
                         const otherPlatformChecked = document.getElementById('platformOther').checked;
                         if (otherPlatformChecked && !document.getElementById('platformOtherText').value.trim()) {
-                            isValid = false;
-                            console.log("Échec de validation : Plateforme 'Autre' sélectionnée mais texte vide."); // Message de débogage
+                            missingFields.push("Champ \"Autre plateforme\"");
                         }
                     }
 
+                    // Q8: Date de l'incident (already has required attribute, but double check)
                     if (!document.getElementById('incidentDate').value.trim()) {
-                        isValid = false;
-                        console.log("Échec de validation : Date de l'incident vide."); // Message de débogage
+                        missingFields.push("Champ \"Quand cet incident a-t-il eu lieu ?\"");
                     }
 
-                    const consequences = document.querySelectorAll('input[name="consequence']:checked');
+                    // Q9: Conséquences
+                    const consequences = document.querySelectorAll('input[name="consequence"]:checked');
                     if (consequences.length === 0) {
-                        isValid = false;
-                        console.log("Échec de validation : Aucune conséquence sélectionnée."); // Message de débogage
+                        missingFields.push("Question \"Quelles ont été les conséquences de cet incident pour vous ?\"");
                     } else {
                         const otherConsequenceChecked = document.getElementById('consequenceOther').checked;
                         if (otherConsequenceChecked && !document.getElementById('consequenceOtherText').value.trim()) {
-                            isValid = false;
-                            console.log("Échec de validation : Conséquence 'Autre' sélectionnée mais texte vide."); // Message de débogage
+                            missingFields.push("Champ \"Autre conséquence\"");
                         }
                     }
 
+                    // Q10: Incident signalé
                     if (!document.querySelector('input[name="reportedIncident"]:checked')) {
-                        isValid = false;
-                        console.log("Échec de validation : Question 'Incident signalé' non sélectionnée."); // Message de débogage
+                        missingFields.push("Question \"Avez-vous signalé cet incident aux autorités compétentes ?\"");
                     }
+                    // Q11: Comptes sécurisés
                     if (!document.querySelector('input[name="securedAccounts"]:checked')) {
-                        isValid = false;
-                        console.log("Échec de validation : Question 'Comptes sécurisés' non sélectionnée."); // Message de débogage
+                        missingFields.push("Question \"Avez-vous pris des mesures pour sécuriser vos comptes ?\"");
                     }
                 }
             }
-            console.log(`Résultat de validation de la Section ${currentSection} : ${isValid}`); // Message de débogage
-            return isValid;
+
+            // Specific validation for section 4 (only for the required radio button)
+            if (currentSection === 4) {
+                if (!document.querySelector('input[name="interestedInInfo"]:checked')) {
+                    missingFields.push("Question \"Seriez-vous intéressé(e) à recevoir des conseils ou des informations sur la cybersécurité ?\"");
+                }
+            }
+
+
+            if (missingFields.length > 0) {
+                console.log(`Champs manquants dans la Section ${currentSection}:`, missingFields); // Message de débogage
+            }
+            return missingFields;
         }
 
         // Toggle visibility of victim-related questions
@@ -907,7 +920,7 @@
 
         // Error modal functions
         window.showErrorModal = function(message) {
-            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorMessage').innerHTML = message; // Use innerHTML for <br> tags
             document.getElementById('errorModal').classList.remove('hidden');
         }
 
@@ -934,8 +947,10 @@
             }
 
             // Validation finale avant soumission
-            if (!validateCurrentSection()) {
-                showErrorModal("Veuillez remplir tous les champs obligatoires de cette section.");
+            const missingFields = validateCurrentSection();
+            if (missingFields.length > 0) {
+                showErrorModal("Veuillez remplir les champs obligatoires suivants :<br>" + missingFields.join('<br>'));
+                hideLoadingSpinner(); // Hide spinner if validation fails on submit
                 return;
             }
 
