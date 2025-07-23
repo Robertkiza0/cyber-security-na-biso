@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersécurité Na Biso : Partagez votre expérience en ligne</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .form-section {
+            display: none; /* Hidden by default */
+        }
+        .form-section.active {
+            display: block; /* Show active section */
+        }
+        input[type="radio"]:checked + label,
+        input[type="checkbox"]:checked + label {
+            background-color: #3b82f6; /* Blue-500 */
+            color: white;
+            border-color: #3b82f6;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-lg shadow-xl p-8 max-w-3xl w-full mx-auto my-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 text-center">Cybersécurité Na Biso : Partagez votre expérience en ligne</h1>
+        <p class="text-gray-600 mb-8 text-center">
+            Ce formulaire vise à recueillir des informations sur les incidents de cybersécurité (arnaques, attaques en ligne) que vous avez pu rencontrer. Votre témoignage est précieux pour nous aider à mieux comprendre les menaces et à sensibiliser la communauté. Toutes les informations resteront confidentielles et seront utilisées uniquement à des fins statistiques et de prévention. Merci pour votre contribution !
+        </p>
+
+        <form id="cybersecurityForm" class="space-y-6">
+            <!-- Section 1: Informations Démographiques -->
+            <div id="section1" class="form-section active">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Section 1 : Informations Démographiques</h2>
+
+                <div class="mb-6">
+                    <label for="ageGroup" class="block text-gray-700 text-sm font-medium mb-2">1. Quel est votre groupe d'âge ?</label>
+                    <select id="ageGroup" name="ageGroup" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Sélectionnez une option</option>
+                        <option value="moins de 18">Moins de 18 ans</option>
+                        <option value="18-25">18 - 25 ans</option>
+                        <option value="26-35">26 - 35 ans</option>
+                        <option value="36-45">36 - 45 ans</option>
+                        <option value="46-55">46 - 55 ans</option>
+                        <option value="56 et plus">56 ans et plus</option>
+                        <option value="prefere ne pas repondre">Je préfère ne pas répondre</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label for="region" class="block text-gray-700 text-sm font-medium mb-2">2. Dans quelle région/ville vous situez-vous principalement ?</label>
+                    <input type="text" id="region" name="region" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: Kinshasa, Goma">
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="button" onclick="nextSection()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-md transition duration-300">Suivant</button>
+                </div>
+            </div>
+
+            <!-- Section 2: Expérience Générale en Cybersécurité -->
+            <div id="section2" class="form-section">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Section 2 : Expérience Générale en Cybersécurité</h2>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">3. Dans quelle mesure vous sentez-vous informé(e) sur les menaces de cybersécurité (phishing, virus, arnaques en ligne, etc.) ?</label>
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-sm text-gray-500">Pas du tout informé(e)</span>
+                        <div class="flex space-x-2">
+                            <input type="radio" id="info1" name="infoLevel" value="1" class="hidden" required>
+                            <label for="info1" class="cursor-pointer border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium transition duration-200 hover:bg-gray-200">1</label>
+                            <input type="radio" id="info2" name="infoLevel" value="2" class="hidden">
+                            <label for="info2" class="cursor-pointer border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium transition duration-200 hover:bg-gray-200">2</label>
+                            <input type="radio" id="info3" name="infoLevel" value="3" class="hidden">
+                            <label for="info3" class="cursor-pointer border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium transition duration-200 hover:bg-gray-200">3</label>
+                            <input type="radio" id="info4" name="infoLevel" value="4" class="hidden">
+                            <label for="info4" class="cursor-pointer border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium transition duration-200 hover:bg-gray-200">4</label>
+                            <input type="radio" id="info5" name="infoLevel" value="5" class="hidden">
+                            <label for="info5" class="cursor-pointer border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium transition duration-200 hover:bg-gray-200">5</label>
+                        </div>
+                        <span class="text-sm text-gray-500">Très bien informé(e)</span>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">4. Utilisez-vous régulièrement des mesures de sécurité en ligne (ex: antivirus, mots de passe forts, authentification à deux facteurs) ?</label>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center">
+                            <input type="radio" id="securityMeasuresYesAlways" name="securityMeasures" value="Oui, toujours" class="hidden" required>
+                            <label for="securityMeasuresYesAlways" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Oui, toujours
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="securityMeasuresYesMost" name="securityMeasures" value="Oui, la plupart du temps" class="hidden">
+                            <label for="securityMeasuresYesMost" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Oui, la plupart du temps
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="securityMeasuresSometimes" name="securityMeasures" value="Parfois" class="hidden">
+                            <label for="securityMeasuresSometimes" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Parfois
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="securityMeasuresRarely" name="securityMeasures" value="Rarement" class="hidden">
+                            <label for="securityMeasuresRarely" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Rarement
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="securityMeasuresNever" name="securityMeasures" value="Non, jamais" class="hidden">
+                            <label for="securityMeasuresNever" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Non, jamais
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button type="button" onclick="prevSection()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-md shadow-md transition duration-300">Précédent</button>
+                    <button type="button" onclick="nextSection()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-md transition duration-300">Suivant</button>
+                </div>
+            </div>
+
+            <!-- Section 3: Incidents d'Arnaque ou d'Attaque en Ligne -->
+            <div id="section3" class="form-section">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Section 3 : Incidents d'Arnaque ou d'Attaque en Ligne</h2>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">5. Avez-vous déjà été victime d'une arnaque ou d'une attaque en ligne ?</label>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center">
+                            <input type="radio" id="victimYes" name="isVictim" value="Oui" class="hidden" required onchange="toggleVictimQuestions()">
+                            <label for="victimYes" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Oui
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="victimNo" name="isVictim" value="Non" class="hidden" onchange="toggleVictimQuestions()">
+                            <label for="victimNo" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Non
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="victimUnsure" name="isVictim" value="Je ne suis pas sûr(e)" class="hidden" onchange="toggleVictimQuestions()">
+                            <label for="victimUnsure" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Je ne suis pas sûr(e)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="victimQuestions" class="space-y-6 hidden">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">6. Quel type d'incident avez-vous rencontré ? (Vous pouvez sélectionner plusieurs options)</label>
+                        <div class="mt-2 space-y-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType1" name="incidentType" value="Phishing / Hameçonnage" class="hidden">
+                                <label for="incidentType1" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Phishing / Hameçonnage
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType2" name="incidentType" value="Arnaque au support technique" class="hidden">
+                                <label for="incidentType2" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Arnaque au support technique
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType3" name="incidentType" value="Arnaque à l'investissement / Cryptomonnaie" class="hidden">
+                                <label for="incidentType3" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Arnaque à l'investissement / Cryptomonnaie
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType4" name="incidentType" value="Arnaque sentimentale / Romantique" class="hidden">
+                                <label for="incidentType4" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Arnaque sentimentale / Romantique
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType5" name="incidentType" value="Ransomware" class="hidden">
+                                <label for="incidentType5" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Ransomware
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType6" name="incidentType" value="Virus / Malware" class="hidden">
+                                <label for="incidentType6" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Virus / Malware
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType7" name="incidentType" value="Usurpation d'identité" class="hidden">
+                                <label for="incidentType7" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Usurpation d'identité
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType8" name="incidentType" value="Fraude à la carte bancaire / Paiement en ligne" class="hidden">
+                                <label for="incidentType8" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Fraude à la carte bancaire / Paiement en ligne
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentType9" name="incidentType" value="Arnaque à l'emploi" class="hidden">
+                                <label for="incidentType9" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Arnaque à l'emploi
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="incidentTypeOther" name="incidentType" value="Autre" class="hidden" onchange="toggleOtherInput('incidentTypeOther', 'incidentTypeOtherText')">
+                                <label for="incidentTypeOther" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Autre (veuillez préciser)
+                                </label>
+                            </div>
+                            <input type="text" id="incidentTypeOtherText" name="incidentTypeOtherText" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm mt-2 hidden" placeholder="Veuillez préciser le type d'incident">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">7. Sur quelle plateforme ou via quel moyen l'incident s'est-il produit ? (Vous pouvez sélectionner plusieurs options)</label>
+                        <div class="mt-2 space-y-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="platform1" name="platform" value="E-mail" class="hidden">
+                                <label for="platform1" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    E-mail
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="platform2" name="platform" value="SMS / Message texte" class="hidden">
+                                <label for="platform2" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    SMS / Message texte
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="platform3" name="platform" value="Réseaux sociaux" class="hidden">
+                                <label for="platform3" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Réseaux sociaux (Facebook, Instagram, WhatsApp, etc.)
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="platform4" name="platform" value="Site web" class="hidden">
+                                <label for="platform4" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Site web (faux site, site piraté)
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="platform5" name="platform" value="Appel téléphonique" class="hidden">
+                                <label for="platform5" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Appel téléphonique
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="platform6" name="platform" value="Application mobile" class="hidden">
+                                <label for="platform6" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Application mobile
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="platform7" name="platform" value="Plateforme de messagerie" class="hidden">
+                                <label for="platform7" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Plateforme de messagerie (Telegram, Signal, etc.)
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="platformOther" name="platform" value="Autre" class="hidden" onchange="toggleOtherInput('platformOther', 'platformOtherText')">
+                                <label for="platformOther" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Autre (veuillez préciser)
+                                </label>
+                            </div>
+                            <input type="text" id="platformOtherText" name="platformOtherText" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm mt-2 hidden" placeholder="Veuillez préciser la plateforme/le moyen">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="incidentDate" class="block text-gray-700 text-sm font-medium mb-2">8. Quand cet incident a-t-il eu lieu ? (Année approximative ou date)</label>
+                        <input type="date" id="incidentDate" name="incidentDate" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">9. Quelles ont été les conséquences de cet incident pour vous ? (Vous pouvez sélectionner plusieurs options)</label>
+                        <div class="mt-2 space-y-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="consequence1" name="consequence" value="Perte financière" class="hidden">
+                                <label for="consequence1" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Perte financière (argent, biens)
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="consequence2" name="consequence" value="Perte de données personnelles" class="hidden">
+                                <label for="consequence2" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Perte de données personnelles
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="consequence3" name="consequence" value="Dommage à la réputation" class="hidden">
+                                <label for="consequence3" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Dommage à la réputation
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="consequence4" name="consequence" value="Stress / Impact émotionnel" class="hidden">
+                                <label for="consequence4" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Stress / Impact émotionnel
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="consequence5" name="consequence" value="Perte d'accès à un compte" class="hidden">
+                                <label for="consequence5" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Perte d'accès à un compte (e-mail, réseau social, etc.)
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="consequence6" name="consequence" value="Problèmes techniques" class="hidden">
+                                <label for="consequence6" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Problèmes techniques sur mon appareil (ralentissement, virus)
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="consequence7" name="consequence" value="Aucune conséquence majeure" class="hidden">
+                                <label for="consequence7" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Aucune conséquence majeure (j'ai détecté l'arnaque à temps)
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="consequenceOther" name="consequence" value="Autre" class="hidden" onchange="toggleOtherInput('consequenceOther', 'consequenceOtherText')">
+                                <label for="consequenceOther" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 border border-gray-400 rounded-sm mr-2 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-blue-500 hidden checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </span>
+                                    Autre (veuillez préciser)
+                                </label>
+                            </div>
+                            <input type="text" id="consequenceOtherText" name="consequenceOtherText" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm mt-2 hidden" placeholder="Veuillez préciser la conséquence">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">10. Avez-vous signalé cet incident aux autorités compétentes (police, cyber-police, banque, plateforme concernée) ?</label>
+                        <div class="mt-2 space-y-2">
+                            <div class="flex items-center">
+                                <input type="radio" id="reportedYes" name="reportedIncident" value="Oui" class="hidden" required>
+                                <label for="reportedYes" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Oui
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="reportedNo" name="reportedIncident" value="Non" class="hidden">
+                                <label for="reportedNo" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Non
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="reportedTried" name="reportedIncident" value="J'ai essayé mais je n'ai pas réussi" class="hidden">
+                                <label for="reportedTried" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    J'ai essayé mais je n'ai pas réussi
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="reportedDidNotKnow" name="reportedIncident" value="Je ne savais pas où le signaler" class="hidden">
+                                <label for="reportedDidNotKnow" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Je ne savais pas où le signaler
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">11. Avez-vous pris des mesures pour sécuriser vos comptes après l'incident ? (Ex: changer de mot de passe, activer l'authentification à deux facteurs)</label>
+                        <div class="mt-2 space-y-2">
+                            <div class="flex items-center">
+                                <input type="radio" id="securedYes" name="securedAccounts" value="Oui" class="hidden" required>
+                                <label for="securedYes" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Oui
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="securedNo" name="securedAccounts" value="Non" class="hidden">
+                                <label for="securedNo" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Non
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="securedDidNotKnow" name="securedAccounts" value="Je ne savais pas quelles mesures prendre" class="hidden">
+                                <label for="securedDidNotKnow" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                    <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                    </span>
+                                    Je ne savais pas quelles mesures prendre
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="incidentDetails" class="block text-gray-700 text-sm font-medium mb-2">12. Si vous souhaitez partager plus de détails sur l'incident (ce qui s'est passé, comment vous l'avez découvert, etc.), veuillez le faire ici. (Optionnel)</label>
+                        <textarea id="incidentDetails" name="incidentDetails" rows="4" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Décrivez l'incident..."></textarea>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button type="button" onclick="prevSection()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-md shadow-md transition duration-300">Précédent</button>
+                    <button type="button" onclick="nextSection()" id="nextSection3Button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-md transition duration-300">Suivant</button>
+                </div>
+            </div>
+
+            <!-- Section 4: Suggestions et Sensibilisation -->
+            <div id="section4" class="form-section">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Section 4 : Suggestions et Sensibilisation</h2>
+
+                <div class="mb-6">
+                    <label for="suggestions" class="block text-gray-700 text-sm font-medium mb-2">13. Selon vous, quelles sont les informations ou les actions les plus importantes pour aider les gens à se protéger en ligne ?</label>
+                    <textarea id="suggestions" name="suggestions" rows="4" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Vos suggestions..."></textarea>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">14. Seriez-vous intéressé(e) à recevoir des conseils ou des informations sur la cybersécurité de notre part ?</label>
+                    <div class="mt-2 space-y-2">
+                        <div class="flex items-center">
+                            <input type="radio" id="interestedYes" name="interestedInInfo" value="Oui" class="hidden" required onchange="toggleEmailInput()">
+                            <label for="interestedYes" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Oui
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="interestedNo" name="interestedInInfo" value="Non" class="hidden" onchange="toggleEmailInput()">
+                            <label for="interestedNo" class="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition duration-200 hover:bg-gray-100">
+                                <span class="w-4 h-4 rounded-full border border-gray-400 mr-2 flex items-center justify-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 hidden radio-checked-dot"></span>
+                                </span>
+                                Non
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="emailInputContainer" class="mb-6 hidden">
+                    <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Votre adresse e-mail (optionnel, uniquement pour vous envoyer des informations) :</label>
+                    <input type="email" id="email" name="email" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="votre.email@example.com">
+                </div>
+
+                <div class="flex justify-between">
+                    <button type="button" onclick="prevSection()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-md shadow-md transition duration-300">Précédent</button>
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-md shadow-md transition duration-300">Soumettre</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Confirmation Message Modal -->
+        <div id="confirmationModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Merci pour votre contribution !</h3>
+                <p class="text-gray-600 mb-6">Votre témoignage est essentiel pour renforcer la cybersécurité de notre communauté. Ensemble, protégeons-nous !</p>
+                <button type="button" onclick="closeConfirmationModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-md transition duration-300">Fermer</button>
+            </div>
+        </div>
+
+        <!-- Error Message Modal -->
+        <div id="errorModal" class="fixed inset-0 bg-red-600 bg-opacity-75 flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
+                <h3 class="text-2xl font-bold text-red-700 mb-4">Erreur de soumission</h3>
+                <p id="errorMessage" class="text-gray-600 mb-6"></p>
+                <button type="button" onclick="closeErrorModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-md shadow-300">Fermer</button>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        let db;
+        let auth;
+        let userId = null;
+        let isAuthReady = false;
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpo08TzzFW2VL5NMowFqJ0STxWqYftZJg",
+            authDomain: "cybersecurite-na-biso.firebaseapp.com",
+            projectId: "cybersecurite-na-biso",
+            storageBucket: "cybersecurite-na-biso.firebasestorage.app",
+            messagingSenderId: "906369667399",
+            appId: "1:906369667399:web:d4d94dda3cc6471828fc62"
+        };
+
+        // Initialize Firebase app and services
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+
+        // Authenticate user and set userId
+        // This listener ensures that Firebase authentication state is ready before proceeding.
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // If a user is already signed in (e.g., from a previous anonymous session), use their UID.
+                userId = user.uid;
+                console.log("Firebase User ID:", userId);
+                isAuthReady = true; // Authentication is ready
+            } else {
+                try {
+                    // If no user is signed in, attempt to sign in anonymously.
+                    // This part handles the initial authentication for the Canvas environment or a standard web host.
+                    if (typeof __initial_auth_token !== 'undefined') {
+                        // For Canvas environment, use the provided custom token
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        // For external hosting, sign in anonymously
+                        const anonymousUser = await signInAnonymously(auth);
+                        userId = anonymousUser.user.uid;
+                        console.log("Signed in anonymously. User ID:", userId);
+                    }
+                    isAuthReady = true; // Authentication is ready after successful sign-in
+                } catch (error) {
+                    console.error("Firebase authentication error:", error);
+                    showErrorModal("Erreur d'authentification Firebase : " + error.message);
+                    isAuthReady = false; // Authentication failed
+                }
+            }
+        });
+
+        // Current section tracking
+        let currentSection = 1;
+        const totalSections = 4;
+
+        // Function to show a specific section
+        function showSection(sectionNumber) {
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`section${sectionNumber}`).classList.add('active');
+            currentSection = sectionNumber;
+        }
+
+        // Navigation functions
+        window.nextSection = function() {
+            // Basic validation for the current section before moving to the next
+            if (!validateCurrentSection()) {
+                showErrorModal("Veuillez remplir tous les champs obligatoires de cette section.");
+                return;
+            }
+
+            if (currentSection === 3) {
+                const isVictim = document.querySelector('input[name="isVictim"]:checked')?.value;
+                if (isVictim === 'Non' || isVictim === 'Je ne suis pas sûr(e)') {
+                    // Skip to the last section if not a victim
+                    showSection(totalSections);
+                    return;
+                }
+            }
+
+            if (currentSection < totalSections) {
+                showSection(currentSection + 1);
+            }
+        }
+
+        window.prevSection = function() {
+            if (currentSection > 1) {
+                showSection(currentSection - 1);
+            }
+        }
+
+        // Validation for current section
+        function validateCurrentSection() {
+            const currentSectionElement = document.getElementById(`section${currentSection}`);
+            let isValid = true;
+
+            // Validate required fields in the current section
+            currentSectionElement.querySelectorAll('[required]').forEach(input => {
+                if (input.type === 'radio') {
+                    const name = input.name;
+                    if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                        isValid = false;
+                    }
+                } else if (input.type === 'checkbox') {
+                    const name = input.name;
+                    if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                        isValid = false;
+                    }
+                } else if (!input.value.trim()) {
+                    isValid = false;
+                }
+            });
+
+            // Specific validation for victim questions if visible
+            if (currentSection === 3) {
+                const isVictim = document.querySelector('input[name="isVictim"]:checked')?.value;
+                if (isVictim === 'Oui' && document.getElementById('victimQuestions').classList.contains('active')) {
+                    // Check if at least one incidentType is checked
+                    const incidentTypes = document.querySelectorAll('input[name="incidentType"]:checked');
+                    if (incidentTypes.length === 0) {
+                        isValid = false;
+                    } else {
+                        // If 'Autre' is checked, ensure the 'other' text field is filled
+                        const otherIncidentTypeChecked = document.getElementById('incidentTypeOther').checked;
+                        if (otherIncidentTypeChecked && !document.getElementById('incidentTypeOtherText').value.trim()) {
+                            isValid = false;
+                        }
+                    }
+
+                    // Check if at least one platform is checked
+                    const platforms = document.querySelectorAll('input[name="platform"]:checked');
+                    if (platforms.length === 0) {
+                        isValid = false;
+                    } else {
+                        // If 'Autre' is checked, ensure the 'other' text field is filled
+                        const otherPlatformChecked = document.getElementById('platformOther').checked;
+                        if (otherPlatformChecked && !document.getElementById('platformOtherText').value.trim()) {
+                            isValid = false;
+                        }
+                    }
+
+                    // Check if incidentDate is filled
+                    if (!document.getElementById('incidentDate').value.trim()) {
+                        isValid = false;
+                    }
+
+                    // Check if at least one consequence is checked
+                    const consequences = document.querySelectorAll('input[name="consequence"]:checked');
+                    if (consequences.length === 0) {
+                        isValid = false;
+                    } else {
+                        // If 'Autre' is checked, ensure the 'other' text field is filled
+                        const otherConsequenceChecked = document.getElementById('consequenceOther').checked;
+                        if (otherConsequenceChecked && !document.getElementById('consequenceOtherText').value.trim()) {
+                            isValid = false;
+                        }
+                    }
+
+                    // Check reportedIncident and securedAccounts radio buttons
+                    if (!document.querySelector('input[name="reportedIncident"]:checked')) {
+                        isValid = false;
+                    }
+                    if (!document.querySelector('input[name="securedAccounts"]:checked')) {
+                        isValid = false;
+                    }
+                }
+            }
+            return isValid;
+        }
+
+        // Toggle visibility of victim-related questions
+        window.toggleVictimQuestions = function() {
+            const isVictim = document.querySelector('input[name="isVictim"]:checked')?.value;
+            const victimQuestionsDiv = document.getElementById('victimQuestions');
+            const nextSection3Button = document.getElementById('nextSection3Button');
+
+            if (isVictim === 'Oui') {
+                victimQuestionsDiv.classList.add('active');
+                victimQuestionsDiv.classList.remove('hidden');
+                // Make fields required if section is active and user is a victim
+                victimQuestionsDiv.querySelectorAll('input, select, textarea').forEach(el => {
+                    if (el.name !== 'incidentDetails') { // incidentDetails is optional
+                        el.setAttribute('required', 'required');
+                    }
+                });
+            } else {
+                victimQuestionsDiv.classList.remove('active');
+                victimQuestionsDiv.classList.add('hidden');
+                // Remove required attribute if section is hidden
+                victimQuestionsDiv.querySelectorAll('input, select, textarea').forEach(el => {
+                    el.removeAttribute('required');
+                });
+            }
+        }
+
+        // Toggle visibility of "other" input fields for checkboxes
+        window.toggleOtherInput = function(checkboxId, inputId) {
+            const checkbox = document.getElementById(checkboxId);
+            const input = document.getElementById(inputId);
+            if (checkbox.checked) {
+                input.classList.remove('hidden');
+                input.setAttribute('required', 'required');
+            } else {
+                input.classList.add('hidden');
+                input.removeAttribute('required');
+                input.value = ''; // Clear value when hidden
+            }
+        }
+
+        // Toggle visibility of email input
+        window.toggleEmailInput = function() {
+            const interestedInInfo = document.querySelector('input[name="interestedInInfo"]:checked')?.value;
+            const emailInputContainer = document.getElementById('emailInputContainer');
+            const emailInput = document.getElementById('email');
+
+            if (interestedInInfo === 'Oui') {
+                emailInputContainer.classList.remove('hidden');
+                // emailInput.setAttribute('required', 'required'); // Keep email optional
+            } else {
+                emailInputContainer.classList.add('hidden');
+                emailInput.removeAttribute('required');
+                emailInput.value = '';
+            }
+        }
+
+        // Confirmation modal functions
+        window.showConfirmationModal = function() {
+            document.getElementById('confirmationModal').classList.remove('hidden');
+        }
+
+        window.closeConfirmationModal = function() {
+            document.getElementById('confirmationModal').classList.add('hidden');
+            // Reset form after successful submission
+            document.getElementById('cybersecurityForm').reset();
+            showSection(1); // Go back to the first section
+            document.getElementById('victimQuestions').classList.add('hidden'); // Hide victim questions
+            document.getElementById('emailInputContainer').classList.add('hidden'); // Hide email input
+            // Reset "other" text inputs
+            document.getElementById('incidentTypeOtherText').classList.add('hidden');
+            document.getElementById('platformOtherText').classList.add('hidden');
+            document.getElementById('consequenceOtherText').classList.add('hidden');
+        }
+
+        // Error modal functions
+        window.showErrorModal = function(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorModal').classList.remove('hidden');
+        }
+
+        window.closeErrorModal = function() {
+            document.getElementById('errorModal').classList.add('hidden');
+        }
+
+        // Loading spinner functions
+        function showLoadingSpinner() {
+            document.getElementById('loadingSpinner').classList.remove('hidden');
+        }
+
+        function hideLoadingSpinner() {
+            document.getElementById('loadingSpinner').classList.add('hidden');
+        }
+
+        // Handle form submission
+        document.getElementById('cybersecurityForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            if (!isAuthReady) {
+                showErrorModal("Authentification en cours, veuillez réessayer dans un instant.");
+                return;
+            }
+
+            if (!validateCurrentSection()) {
+                showErrorModal("Veuillez remplir tous les champs obligatoires de cette section.");
+                return;
+            }
+
+            showLoadingSpinner();
+
+            const formData = new FormData(event.target);
+            const data = {};
+
+            // Collect all form data
+            for (let [key, value] of formData.entries()) {
+                if (key.endsWith('OtherText') && !document.getElementById(key.replace('Text', '')).checked) {
+                    continue; // Skip 'other' text if its corresponding checkbox is not checked
+                }
+                if (key === 'incidentType' || key === 'platform' || key === 'consequence') {
+                    if (!data[key]) {
+                        data[key] = [];
+                    }
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            // Handle 'other' text for checkboxes
+            document.querySelectorAll('input[type="checkbox"][name="incidentType"]').forEach(checkbox => {
+                if (checkbox.value === 'Autre' && checkbox.checked) {
+                    const otherText = document.getElementById('incidentTypeOtherText').value.trim();
+                    if (otherText) {
+                        data.incidentType = data.incidentType || [];
+                        if (!data.incidentType.includes(otherText)) { // Avoid duplicates
+                            data.incidentType.push(otherText);
+                        }
+                    }
+                }
+            });
+            document.querySelectorAll('input[type="checkbox"][name="platform"]').forEach(checkbox => {
+                if (checkbox.value === 'Autre' && checkbox.checked) {
+                    const otherText = document.getElementById('platformOtherText').value.trim();
+                    if (otherText) {
+                        data.platform = data.platform || [];
+                        if (!data.platform.includes(otherText)) { // Avoid duplicates
+                            data.platform.push(otherText);
+                        }
+                    }
+                }
+            });
+            document.querySelectorAll('input[type="checkbox"][name="consequence"]').forEach(checkbox => {
+                if (checkbox.value === 'Autre' && checkbox.checked) {
+                    const otherText = document.getElementById('consequenceOtherText').value.trim();
+                    if (otherText) {
+                        data.consequence = data.consequence || [];
+                        if (!data.consequence.includes(otherText)) { // Avoid duplicates
+                            data.consequence.push(otherText);
+                        }
+                    }
+                }
+            });
+
+            // Clean up 'Other' values if not selected
+            if (data.incidentType && data.incidentType.includes('Autre') && !document.getElementById('incidentTypeOther').checked) {
+                data.incidentType = data.incidentType.filter(item => item !== 'Autre');
+            }
+            if (data.platform && data.platform.includes('Autre') && !document.getElementById('platformOther').checked) {
+                data.platform = data.platform.filter(item => item !== 'Autre');
+            }
+            if (data.consequence && data.consequence.includes('Autre') && !document.getElementById('consequenceOther').checked) {
+                data.consequence = data.consequence.filter(item => item !== 'Autre');
+            }
+
+            // Add timestamp
+            data.timestamp = new Date().toISOString();
+            data.userId = userId; // Store the user ID
+
+            console.log("Data to be saved:", data);
+
+            try {
+                // Save data to Firestore
+                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                const collectionPath = `artifacts/${appId}/users/${userId}/responses`;
+                await addDoc(collection(db, collectionPath), data);
+                console.log("Document successfully written!");
+                showConfirmationModal();
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                showErrorModal("Une erreur est survenue lors de la soumission de votre formulaire : " + e.message);
+            } finally {
+                hideLoadingSpinner();
+            }
+        });
+
+        // Add event listeners for custom radio/checkbox styling
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                document.querySelectorAll(`input[name="${radio.name}"]`).forEach(otherRadio => {
+                    otherRadio.nextElementSibling.querySelector('.radio-checked-dot')?.classList.add('hidden');
+                    otherRadio.nextElementSibling.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                });
+                if (radio.checked) {
+                    radio.nextElementSibling.querySelector('.radio-checked-dot')?.classList.remove('hidden');
+                    radio.nextElementSibling.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+                }
+            });
+        });
+
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    checkbox.nextElementSibling.querySelector('.checkmark')?.classList.remove('hidden');
+                    checkbox.nextElementSibling.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+                } else {
+                    checkbox.nextElementSibling.querySelector('.checkmark')?.classList.add('hidden');
+                    checkbox.nextElementSibling.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                }
+            });
+        });
+
+        // Initial setup for conditional display
+        window.onload = function() {
+            showSection(1); // Ensure the first section is active on load
+            toggleVictimQuestions(); // Set initial state for victim questions
+            toggleEmailInput(); // Set initial state for email input
+        }
+
+    </script>
+</body>
+</html>
